@@ -7,9 +7,10 @@ export default function DownloadButton({ tailoredData }) {
 
   const handleDownload = async () => {
     setIsDownloading(true);
+    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
     try {
       // Assuming backend returns a blob for the PDF
-      const response = await axios.post('http://localhost:8000/api/download-pdf', tailoredData, {
+      const response = await axios.post(`${API_URL}/api/download-pdf`, tailoredData, {
         responseType: 'blob'
       });
       

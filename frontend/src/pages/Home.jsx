@@ -12,6 +12,8 @@ export default function Home() {
   const [jdText, setJdText] = useState('');
   const [isProcessing, setIsProcessing] = useState(false);
   
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+  
   // State for data from backend
   const [analysisResults, setAnalysisResults] = useState(null);
   const [tailoredData, setTailoredData] = useState(null);
@@ -28,22 +30,22 @@ export default function Home() {
       const formData = new FormData();
       formData.append('file', resumeFile);
       
-      const uploadRes = await axios.post('http://localhost:8000/api/upload-resume', formData);
+      const uploadRes = await axios.post(`${API_URL}/api/upload-resume`, formData);
       const parsedResume = uploadRes.data;
 
       // 2. Parse JD
-      const jdRes = await axios.post('http://localhost:8000/api/parse-jd', { text: jdText });
+      const jdRes = await axios.post(`${API_URL}/api/parse-jd`, { text: jdText });
       const parsedJd = jdRes.data;
 
       // 3. Analyze match
-      const analyzeRes = await axios.post('http://localhost:8000/api/analyze', {
+      const analyzeRes = await axios.post(`${API_URL}/api/analyze`, {
         resume: parsedResume,
         job_description: parsedJd
       });
       const analysisReport = analyzeRes.data;
 
       // 4. Optimize Resume
-      const optimizeRes = await axios.post('http://localhost:8000/api/optimize', {
+      const optimizeRes = await axios.post(`${API_URL}/api/optimize`, {
         resume: parsedResume,
         job_description: parsedJd,
         analysis: analysisReport
