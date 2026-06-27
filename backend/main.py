@@ -19,10 +19,16 @@ app = FastAPI(
 # ---------------------------------------------------------------------------
 # CORS
 # ---------------------------------------------------------------------------
+import os
+
 origins = [
     "http://localhost:5173",   # Vite dev server
     "http://127.0.0.1:5173",
 ]
+
+env_origins = os.getenv("CORS_ORIGINS")
+if env_origins:
+    origins.extend([origin.strip() for origin in env_origins.split(",")])
 
 app.add_middleware(
     CORSMiddleware,
