@@ -18,7 +18,7 @@ groq==0.13.0
 python-dotenv==1.0.1
 
 # PDF generation (Phase 5)
-weasyprint==62.3
+xhtml2pdf==0.2.16
 jinja2==3.1.4
 
 # Testing
