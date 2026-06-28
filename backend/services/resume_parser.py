@@ -20,12 +20,12 @@ from backend.models.resume import Resume, ExperienceEntry, EducationEntry, Proje
 # Section heading patterns
 # ---------------------------------------------------------------------------
 SECTION_PATTERNS = {
-    "summary":        re.compile(r"^\s*(professional\s+summary|summary|objective|profile|about\s+me)\s*$", re.I),
-    "experience":     re.compile(r"^\s*(work\s+experience|experience|employment|work\s+history|career)\s*$", re.I),
-    "skills":         re.compile(r"^\s*(skills|technical\s+skills|core\s+competencies|technologies|tech\s+stack)\s*$", re.I),
-    "education":      re.compile(r"^\s*(education|academic|qualifications?|schooling)\s*$", re.I),
-    "projects":       re.compile(r"^\s*(projects?|personal\s+projects?|key\s+projects?|portfolio)\s*$", re.I),
-    "certifications": re.compile(r"^\s*(certifications?|certificates?|courses?|achievements?|awards?)\s*$", re.I),
+    "summary":        re.compile(r"^\s*(professional\s+summary|summary|objective|profile|about\s+me|executive\s+summary)\s*:?\s*$", re.I),
+    "experience":     re.compile(r"^\s*(work\s+experience|experience|employment|work\s+history|career|professional\s+experience)\s*:?\s*$", re.I),
+    "skills":         re.compile(r"^\s*(skills|technical\s+skills|core\s+competencies|competencies|expertise|technical\s+expertise|technologies|tech\s+stack|areas\s+of\s+expertise|it\s+skills|professional\s+skills)\s*:?\s*$", re.I),
+    "education":      re.compile(r"^\s*(education|academic|qualifications?|schooling|academic\s+background)\s*:?\s*$", re.I),
+    "projects":       re.compile(r"^\s*(projects?|personal\s+projects?|key\s+projects?|portfolio|academic\s+projects?)\s*:?\s*$", re.I),
+    "certifications": re.compile(r"^\s*(certifications?|certificates?|courses?|achievements?|awards?|licenses?)\s*:?\s*$", re.I),
 }
 
 # Patterns for contact extraction
