@@ -80,11 +80,6 @@
             background-color: #c6f6d5;
             padding: 2px;
         }
-        .diff-removed {
-            background-color: #fed7d7;
-            text-decoration: line-through;
-            padding: 2px;
-        }
         .resume-header {
             text-align: center;
             margin-bottom: 10px;
@@ -126,6 +121,47 @@
         }
         .clear {
             clear: both;
+        }
+        
+        /* Clean Resume Styles */
+        .clean-resume {
+            margin: 0 auto;
+        }
+        .clean-name {
+            font-size: 20pt;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 5px;
+        }
+        .clean-contact {
+            text-align: center;
+            font-size: 10pt;
+            color: #555;
+            margin-bottom: 20px;
+        }
+        .clean-section-title {
+            font-size: 12pt;
+            font-weight: bold;
+            text-transform: uppercase;
+            border-bottom: 1px solid #000;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            padding-bottom: 3px;
+        }
+        .clean-item-header {
+            margin-bottom: 3px;
+        }
+        .clean-title {
+            font-weight: bold;
+        }
+        .clean-date {
+            float: right;
+            font-size: 10pt;
+        }
+        .clean-subtitle {
+            font-style: italic;
+            font-size: 10pt;
+            color: #444;
         }
     </style>
 </head>
@@ -174,7 +210,7 @@
         </ul>
     </div>
 
-    <!-- Page 2+: Side-by-side -->
+    <!-- Page 2: Side-by-side -->
     <div class="page-break"></div>
     
     <div class="header">
@@ -186,9 +222,12 @@
         <div class="column-left">
             <div class="resume-header">Original Resume</div>
             
+            {% if data.original_resume.professional_summary %}
             <div class="resume-section-title">Summary</div>
             <p style="font-size: 9.5pt;">{{ data.original_resume.professional_summary }}</p>
+            {% endif %}
 
+            {% if data.original_resume.experience %}
             <div class="resume-section-title">Experience</div>
             {% for exp in data.original_resume.experience %}
                 <div>
@@ -202,18 +241,45 @@
                 {% endfor %}
                 </ul>
             {% endfor %}
+            {% endif %}
 
+            {% if data.original_resume.projects %}
+            <div class="resume-section-title">Projects</div>
+            {% for proj in data.original_resume.projects %}
+                <div>
+                    <span class="job-title">{{ proj.name }}</span><br>
+                    <span style="font-size: 9.5pt;">{{ proj.description }}</span>
+                </div>
+            {% endfor %}
+            {% endif %}
+
+            {% if data.original_resume.skills %}
             <div class="resume-section-title">Skills</div>
             <p style="font-size: 9.5pt;">{{ data.original_resume.skills | join(", ") }}</p>
+            {% endif %}
+
+            {% if data.original_resume.education %}
+            <div class="resume-section-title">Education</div>
+            {% for edu in data.original_resume.education %}
+                <div>
+                    <span class="job-title">{{ edu.degree }}</span>
+                    <span class="job-duration">{{ edu.year }}</span><br>
+                    <span class="job-company">{{ edu.institution }}</span>
+                </div>
+            {% endfor %}
+            {% endif %}
         </div>
 
         <!-- Tailored Resume Column -->
         <div class="column-right">
             <div class="resume-header">Tailored Resume</div>
             
+            {% if data.tailored_resume.professional_summary %}
             <div class="resume-section-title">Summary</div>
-            <p style="font-size: 9.5pt;" class="diff-added">{{ data.tailored_resume.professional_summary }}</p>
+            <p style="font-size: 9.5pt;">{{ data.tailored_resume.professional_summary }}</p>
+            {% endif %}
 
+            {% if data.tailored_resume.experience %}
             <div class="resume-section-title">Experience</div>
             {% for exp in data.tailored_resume.experience %}
                 <div>
@@ -223,14 +289,114 @@
                 </div>
                 <ul>
                 {% for bullet in exp.bullets %}
-                    <li class="diff-added">{{ bullet }}</li>
+                    <li>{{ bullet }}</li>
                 {% endfor %}
                 </ul>
             {% endfor %}
+            {% endif %}
 
+            {% if data.tailored_resume.projects %}
+            <div class="resume-section-title">Projects</div>
+            {% for proj in data.tailored_resume.projects %}
+                <div>
+                    <span class="job-title">{{ proj.name }}</span><br>
+                    <span style="font-size: 9.5pt;">{{ proj.description }}</span>
+                </div>
+            {% endfor %}
+            {% endif %}
+
+            {% if data.tailored_resume.skills %}
             <div class="resume-section-title">Skills</div>
-            <p style="font-size: 9.5pt;" class="diff-added">{{ data.tailored_resume.skills | join(", ") }}</p>
+            <p style="font-size: 9.5pt;">{{ data.tailored_resume.skills | join(", ") }}</p>
+            {% endif %}
+
+            {% if data.tailored_resume.education %}
+            <div class="resume-section-title">Education</div>
+            {% for edu in data.tailored_resume.education %}
+                <div>
+                    <span class="job-title">{{ edu.degree }}</span>
+                    <span class="job-duration">{{ edu.year }}</span><br>
+                    <span class="job-company">{{ edu.institution }}</span>
+                </div>
+            {% endfor %}
+            {% endif %}
         </div>
+    </div>
+    
+    <div class="clear"></div>
+
+    <!-- Page 3: Clean Tailored Resume -->
+    <div class="page-break"></div>
+    
+    <div class="clean-resume">
+        <div class="clean-name">
+            {{ data.tailored_resume.name or "Your Name" }}
+        </div>
+        <div class="clean-contact">
+            {% if data.tailored_resume.email %}{{ data.tailored_resume.email }} | {% endif %}
+            {% if data.tailored_resume.phone %}{{ data.tailored_resume.phone }} | {% endif %}
+            {% if data.tailored_resume.linkedin %}LinkedIn | {% endif %}
+            {% if data.tailored_resume.github %}GitHub{% endif %}
+        </div>
+
+        {% if data.tailored_resume.professional_summary %}
+        <div class="clean-section-title">Professional Summary</div>
+        <p style="font-size: 10.5pt; text-align: justify;">{{ data.tailored_resume.professional_summary }}</p>
+        {% endif %}
+
+        {% if data.tailored_resume.experience %}
+        <div class="clean-section-title">Experience</div>
+        {% for exp in data.tailored_resume.experience %}
+            <div class="clean-item-header">
+                <span class="clean-title">{{ exp.role }}</span>
+                <span class="clean-date">{{ exp.duration }}</span>
+            </div>
+            <div class="clean-subtitle">{{ exp.company }}{% if exp.location %}, {{ exp.location }}{% endif %}</div>
+            <ul>
+            {% for bullet in exp.bullets %}
+                <li style="font-size: 10.5pt;">{{ bullet }}</li>
+            {% endfor %}
+            </ul>
+        {% endfor %}
+        {% endif %}
+        
+        {% if data.tailored_resume.projects %}
+        <div class="clean-section-title">Projects</div>
+        {% for proj in data.tailored_resume.projects %}
+            <div class="clean-item-header">
+                <span class="clean-title">{{ proj.name }}</span>
+            </div>
+            <p style="font-size: 10.5pt; margin-top: 2px; margin-bottom: 2px;">{{ proj.description }}</p>
+            {% if proj.tech_stack %}
+            <p style="font-size: 10pt; color: #555; margin-top: 0;"><strong>Tech Stack:</strong> {{ proj.tech_stack | join(", ") }}</p>
+            {% endif %}
+        {% endfor %}
+        {% endif %}
+
+        {% if data.tailored_resume.skills %}
+        <div class="clean-section-title">Skills</div>
+        <p style="font-size: 10.5pt;">{{ data.tailored_resume.skills | join(", ") }}</p>
+        {% endif %}
+
+        {% if data.tailored_resume.education %}
+        <div class="clean-section-title">Education</div>
+        {% for edu in data.tailored_resume.education %}
+            <div class="clean-item-header" style="margin-top: 10px;">
+                <span class="clean-title">{{ edu.institution }}</span>
+                <span class="clean-date">{{ edu.year }}</span>
+            </div>
+            <div style="font-size: 10.5pt;">{{ edu.degree }}</div>
+        {% endfor %}
+        {% endif %}
+        
+        {% if data.tailored_resume.certifications %}
+        <div class="clean-section-title">Certifications</div>
+        <ul>
+        {% for cert in data.tailored_resume.certifications %}
+            <li style="font-size: 10.5pt;">{{ cert }}</li>
+        {% endfor %}
+        </ul>
+        {% endif %}
     </div>
 
 </body>
